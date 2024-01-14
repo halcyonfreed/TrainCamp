@@ -29,6 +29,28 @@ public:
     }
 };
 
+// 递归法
+class Solution2{
+public:
+    ListNode* reverse(ListNode* pre,ListNode* cur){
+        //递归三部曲： 返回和参数类型； 结束条件；单层逻辑
+        if(cur == NULL) return pre; //空链表不用反转了
+
+        ListNode* temp = cur->next; //存下一个
+        cur->next = pre; // 指回前一个,换方向，两两处理！！！
+        // 可以和双指针法的代码进行对比，如下递归的写法，其实就是做了这两步
+        // pre = cur;
+        // cur = temp;
+        return reverse(cur,temp);  //套娃
+    }
+    ListNode* reverseList(ListNode* head) {
+        // 和双指针法初始化是一样的逻辑
+        // ListNode* cur = head;
+        // ListNode* pre = NULL;
+        return reverse(NULL, head);
+    }
+};
+
 int main(){
     int num;
     ListNode* dummyhead=new ListNode(); //默认val=0,next=nullptr
