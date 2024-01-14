@@ -16,7 +16,7 @@
 
 ### 类别
 
-链表；增删取；虚拟头节点
+链表；设虚拟头节点，不是真的头
 
 ### 易错点
 
@@ -25,8 +25,6 @@
 3. 打印Listnode的初始：究竟是head还是head->next；结束条件判的是cur还是cur->next非空！‘
 4. 要不要设置Pre，cur混乱
 5. 打印的getchar()=='\n'放在哪里！！
-
-其他:
 
 ### code
 
@@ -135,18 +133,24 @@ int main(){
 
 ### code
 
-## LC 707.设计链表
+## LC 206.反转链表
 
-[题目链接/文章讲解/视频讲解：[https://programmercarl.com/0707.%E8%AE%BE%E8%AE%A1%E9%93%BE%E8%A1%A8.html](https://programmercarl.com/0707.设计链表.html)](https://programmercarl.com/0707.设计链表.html)
+建议先看我的视频讲解，视频讲解中对 反转链表需要注意的点讲的很清晰了，看完之后大家的疑惑基本都解决了。 
+
+题目链接/文章讲解/视频讲解：[https://programmercarl.com/0206.%E7%BF%BB%E8%BD%AC%E9%93%BE%E8%A1%A8.html](https://programmercarl.com/0206.翻转链表.html) 
 
 ### 类别
 
-链表；增删取；虚拟头节点
+链表；改next方向
 
 ### 易错点
 
-1. 
+1. 不用定义新的链表，直接原地改next方向就行！特别妙
+1. 初始化cur=head, pre=nullptr 想不到
+1. 先存temp=cur->next 再移pre, cur
+1. while条件cur还是cur->next 看注释！
 
-其他:
+其他: 可以在vscode里打断点调试
 
 ### code
+
