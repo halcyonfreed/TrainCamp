@@ -20,7 +20,9 @@ ssh:connect to host github.com port 22: Connection timed out
 
 [用的方法二：](https://blog.csdn.net/weixin_45637036/article/details/106560217)
 
-[Git问题：解决“ssh:connect to host github.com port 22: Connection timed out”_ssh: connect to host github.com port 22: connectio-CSDN博客](https://blog.csdn.net/weixin_45637036/article/details/106560217)
+[Git问题：解决“s](https://blog.csdn.net/weixin_45637036/article/details/106560217)
+
+[sh:connect to host github.com port 22: Connection timed out”_ssh: connect to host github.com port 22: connectio-CSDN博客](https://blog.csdn.net/weixin_45637036/article/details/106560217)
 
 ## LC 344.反转字符串
 
