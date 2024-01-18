@@ -236,7 +236,7 @@ double ptr之左右指针; 704的拓展
 
 错误
 
-```
+```cpp
 class Solution {
 public:
     int searchInsert(vector<int>& nums, int target) {
