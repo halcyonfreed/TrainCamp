@@ -1,16 +1,34 @@
-class Solution {
+class MyStack {
 public:
-    vector<int> twoSum(vector<int>& nums, int target) {
-        std::unordered_map <int,int> map;
-        for(int i = 0; i < nums.size(); i++) {
-            // 遍历当前元素，并在map中寻找是否有匹配的key
-            auto iter = map.find(target - nums[i]); 
-            if(iter != map.end()) {
-                return {iter->second, i};
-            }
-            // 如果没找到匹配对，就把访问过的元素和下标加入到map中
-            map.insert(pair<int, int>(nums[i], i)); 
+    queue<int> que;
+    /** Initialize your data structure here. */
+    MyStack() {
+
+    }
+    /** Push element x onto stack. */
+    void push(int x) {
+        que.push(x);
+    }
+    /** Removes the element on top of the stack and returns that element. */
+    int pop() {
+        int size = que.size();
+        size--;
+        while (size--) { // 将队列头部的元素（除了最后一个元素外） 重新添加到队列尾部
+            que.push(que.front());
+            que.pop();
         }
-        return {};
+        int result = que.front(); // 此时弹出的元素顺序就是栈的顺序了
+        que.pop();
+        return result;
+    }
+
+    /** Get the top element. */
+    int top() {
+        return que.back();
+    }
+
+    /** Returns whether the stack is empty. */
+    bool empty() {
+        return que.empty();
     }
 };
