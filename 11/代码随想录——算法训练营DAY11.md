@@ -12,8 +12,6 @@
 
 题目链接/文章讲解/视频讲解：[https://programmercarl.com/0020.%E6%9C%89%E6%95%88%E7%9A%84%E6%8B%AC%E5%8F%B7.html](https://programmercarl.com/0020.有效的括号.html) 
 
- 
-
 ### 类别
 
 匹配问题：用栈data structure
@@ -177,7 +175,7 @@ public:
 
 尼玛按我的就是过不了
 
-报错：为什么
+报错：为什么 会stoll这块有问题！！:  我是先判断是不是数字，再判断是不是运算符；答案是反过来就可以通过
 
 ```
 Line 172: Char 16: runtime error: reference binding to misaligned address 0xbebebebebebec0b6 for type 'long long', which requires 8 byte alignment (stl_deque.h)
