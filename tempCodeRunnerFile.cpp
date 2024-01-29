@@ -1,23 +1,21 @@
 class Solution {
 public:
-    bool compare(TreeNode* left, TreeNode* right) {
-        // 首先排除空节点的情况
-        if (left == NULL && right != NULL) return false;
-        else if (left != NULL && right == NULL) return false;
-        else if (left == NULL && right == NULL) return true;
-        // 排除了空节点，再排除数值不相同的情况
-        else if (left->val != right->val) return false;
-
-        // 此时就是：左右节点都不为空，且数值相同的情况
-        // 此时才做递归，做下一层的判断
-        bool outside = compare(left->left, right->right);   // 左子树：左、 右子树：右
-        bool inside = compare(left->right, right->left);    // 左子树：右、 右子树：左
-        bool isSame = outside && inside;                    // 左子树：中、 右子树：中 （逻辑处理）
-        return isSame;
-
-    }
-    bool isSymmetric(TreeNode* root) {
-        if (root == NULL) return true;
-        return compare(root->left, root->right);
+    int countNodes(TreeNode* root) {
+        if (root == nullptr) return 0;
+        TreeNode* left = root->left;
+        TreeNode* right = root->right;
+        int leftDepth = 0, rightDepth = 0; // 这里初始为0是有目的的，为了下面求指数方便
+        while (left) {  // 求左子树深度
+            left = left->left;
+            leftDepth++;
+        }
+        while (right) { // 求右子树深度
+            right = right->right;
+            rightDepth++;
+        }
+        if (leftDepth == rightDepth) {
+            return (2 << leftDepth) - 1; // 注意(2<<1) 相当于2^2，所以leftDepth初始为0
+        }
+        return countNodes(root->left) + countNodes(root->right) + 1;
     }
 };

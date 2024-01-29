@@ -4,13 +4,13 @@
 
  
 
-迭代法，大家可以直接过，二刷有精力的时候 再去掌握迭代法。
+迭代法，大家可以直接过，二刷有精力的时候 再去掌握迭代法。!!
 
 
 
 ## LC  110.平衡二叉树 （优先掌握递归）
 
-再一次涉及到，什么是高度，什么是深度，可以巩固一下。 
+再一次涉及到，什么是高度 从下往上后序，什么是深度 从上往下 前序，可以巩固一下。 
 
 题目链接/文章讲解/视频讲解：[https://programmercarl.com/0110.%E5%B9%B3%E8%A1%A1%E4%BA%8C%E5%8F%89%E6%A0%91.html](https://programmercarl.com/0110.平衡二叉树.html)
 
@@ -18,15 +18,44 @@
 
 ### 类别
 
+求深度从上往下适合用前序遍历，而求高度从下往上适合用后序遍历。
 
+本题迭代法其实有点复杂，大家可以有一个思路，也不一定说非要写出来。
+
+但是递归方式是一定要掌握的！
 
 ### 易错点
 
-1. 
+1. 不难就是要想清楚，怎么构造递归，递归用来求高度
+2. main函数用来判断
+3. -1不好想
 
 其他:
 
 ### code
+
+```cpp
+class Solution {
+private:
+    int getHeight(TreeNode* node){
+        if(node==nullptr) return 0;
+        // 后序，求高度左右中
+        // int leftHeight=getHeight(node->left);
+        // int rightHeight=getHeight(node->right);
+        // return 1+max(leftHeight,rightHeight);
+        
+        int leftHeight=getHeight(node->left);
+        if (leftHeight==-1) return -1;
+        int rightHeight=getHeight(node->right);
+        if (rightHeight==-1) return -1;
+        return abs(leftHeight-rightHeight)>1?-1:1+max(leftHeight,rightHeight);
+    } //无分号
+public:
+    bool isBalanced(TreeNode* root) {
+        return getHeight(root)==-1? false:true;
+    }
+};
+```
 
 
 
@@ -46,7 +75,7 @@
 
 ### 类别
 
-
+找路径的题，都要回溯：前序递归+回溯！
 
 ### 易错点
 
