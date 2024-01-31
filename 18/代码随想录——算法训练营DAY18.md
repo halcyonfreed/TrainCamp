@@ -1,4 +1,4 @@
-# 代码随想录——算法训练营DAY
+# 代码随想录——算法训练营DAY18
 ## ACM模式输入输出参考
 [acm模式输入输出](https://blog.csdn.net/qq_46046431/article/details/129266738?ops_request_misc=%257B%2522request%255Fid%2522%253A%2522170488815716800197032506%2522%252C%2522scm%2522%253A%252220140713.130102334.pc%255Fall.%2522%257D&request_id=170488815716800197032506&biz_id=0&utm_medium=distribute.pc_search_result.none-task-blog-2~all~first_rank_ecpm_v1~rank_v31_ecpm-2-129266738-null-null.142%5Ev99%5Epc_search_result_base6&utm_term=acm%E6%A8%A1%E5%BC%8F%E8%AF%BB%E5%85%A5vector&spm=1018.2226.3001.4187)
 ## LC  513.找树左下角的值
@@ -11,19 +11,83 @@
 
 ### 类别
 
-
+queue.push()，empty()  .front()
 
 ### 易错点
 
-1. 
+1. 找出树的**最后一行（就是最后一层）的最左边的值**。此时大家应该想起用层序遍历是非常简单的了，反而用递归的话会比较难一点。
 
 其他:
 
 ### code
 
+先掌握迭代法 很容易想到层序遍历
+
+```cpp
+
+class Solution {
+public:
+    int findBottomLeftValue(TreeNode* root) {
+        // 层序遍历，用队列
+        queue<TreeNode*> que; //指向 TreeNode 对象的指针，不要漏了*
+        if(root!=nullptr) que.push(root); //初始化！！
+        int result;
+
+        while(!que.empty()){
+            int size=que.size(); //这一层的大小
+            // 中左右前序遍历这一层的，同时遍历压入左右孩子；同时更新结果
+            for(int i=0;i<size;i++){
+                TreeNode* node=que.front();
+                que.pop();
+                if(i==0) result=node->val;//这层第一个
+                
+                if(node->left)que.push(node->left); //压下一层的
+                if(node->right)que.push(node->right);
+            }
+        }
+        return result;
+    }
+};
+```
+
+递归法：
+
+记录深度（从而找到最后一层）+ 最后一层第一个
+
+```cpp
+public:
+    int maxDepth=INT_MIN;
+    int result;
+    void traversal(TreeNode* root,int depth){
+        // 从上往下，前序 中左右
+        // 2 end 条件+动作
+        if(root->left==nullptr && root->right==nullptr){
+            if(depth>maxDepth){
+                maxDepth=depth;
+                result=root->val;
+            }
+        }
+
+        if(root->left){
+            depth++;
+            traversal(root->left,depth);
+            depth--; //回溯
+            // 可以简化成 traveresal(root->left,depth+1);
+        }
+        if(root->right){
+            traversal(root->right,depth+1);
+        }
+    }
+    int findBottomLeftValue(TreeNode* root) {
+        traversal(root,0);
+        return result;
+    }
+};
+```
 
 
-## LC112 路径总和，和 113. 路径总和ii
+
+## LC 112 路径总和   113. 路径总和ii
 
 本题 又一次要回溯的过程，而且回溯的过程隐藏的还挺深，建议先看视频来理解
 
