@@ -1,21 +1,35 @@
 class Solution {
+private:
+
+    void traversal(TreeNode* cur, vector<int>& path, vector<string>& result) {
+        path.push_back(cur->val); // 中，中为什么写在这里，因为最后一个节点也要加入到path中 
+        // 这才到了叶子节点
+        if (cur->left == NULL && cur->right == NULL) {
+            string sPath;
+            for (int i = 0; i < path.size() - 1; i++) {
+                sPath += to_string(path[i]);
+                sPath += "->";
+            }
+            sPath += to_string(path[path.size() - 1]);
+            result.push_back(sPath);
+            return;
+        }
+        if (cur->left) { // 左 
+            traversal(cur->left, path, result);
+            path.pop_back(); // 回溯
+        }
+        if (cur->right) { // 右
+            traversal(cur->right, path, result);
+            path.pop_back(); // 回溯
+        }
+    }
+
 public:
-    int countNodes(TreeNode* root) {
-        if (root == nullptr) return 0;
-        TreeNode* left = root->left;
-        TreeNode* right = root->right;
-        int leftDepth = 0, rightDepth = 0; // 这里初始为0是有目的的，为了下面求指数方便
-        while (left) {  // 求左子树深度
-            left = left->left;
-            leftDepth++;
-        }
-        while (right) { // 求右子树深度
-            right = right->right;
-            rightDepth++;
-        }
-        if (leftDepth == rightDepth) {
-            return (2 << leftDepth) - 1; // 注意(2<<1) 相当于2^2，所以leftDepth初始为0
-        }
-        return countNodes(root->left) + countNodes(root->right) + 1;
+    vector<string> binaryTreePaths(TreeNode* root) {
+        vector<string> result;
+        vector<int> path;
+        if (root == NULL) return result;
+        traversal(root, path, result);
+        return result;
     }
 };
