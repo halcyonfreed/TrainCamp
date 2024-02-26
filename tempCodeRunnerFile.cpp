@@ -1,35 +1,41 @@
 class Solution {
 private:
+    // 在左闭右开区间[left, right)，构造二叉树
+    TreeNode* traversal(vector<int>& nums, int left, int right) {
+        if (left >= right) return nullptr;
 
-    void traversal(TreeNode* cur, vector<int>& path, vector<string>& result) {
-        path.push_back(cur->val); // 中，中为什么写在这里，因为最后一个节点也要加入到path中 
-        // 这才到了叶子节点
-        if (cur->left == NULL && cur->right == NULL) {
-            string sPath;
-            for (int i = 0; i < path.size() - 1; i++) {
-                sPath += to_string(path[i]);
-                sPath += "->";
-            }
-            sPath += to_string(path[path.size() - 1]);
-            result.push_back(sPath);
-            return;
+        // 分割点下标：maxValueIndex
+        int maxValueIndex = left;
+        for (int i = left + 1; i < right; ++i) {
+            if (nums[i] > nums[maxValueIndex]) maxValueIndex = i;
         }
-        if (cur->left) { // 左 
-            traversal(cur->left, path, result);
-            path.pop_back(); // 回溯
+
+        TreeNode* root = new TreeNode(nums[maxValueIndex]);
+
+class Solution {
+private:
+    // 在左闭右开区间[left, right)，构造二叉树
+    TreeNode* traversal(vector<int>& nums, int left, int right) {
+        if (left >= right) return nullptr;
+
+        // 分割点下标：maxValueIndex
+        int maxValueIndex = left;
+        for (int i = left + 1; i < right; ++i) {
+            if (nums[i] > nums[maxValueIndex]) maxValueIndex = i;
         }
-        if (cur->right) { // 右
-            traversal(cur->right, path, result);
-            path.pop_back(); // 回溯
-        }
+
+        TreeNode* root = new TreeNode(nums[maxValueIndex]);
+
+        // 左闭右开：[left, maxValueIndex)
+        root->left = traversal(nums, left, maxValueIndex);
+
+        // 左闭右开：[maxValueIndex + 1, right)
+        root->right = traversal(nums, maxValueIndex + 1, right);
+
+        return root;
     }
-
 public:
-    vector<string> binaryTreePaths(TreeNode* root) {
-        vector<string> result;
-        vector<int> path;
-        if (root == NULL) return result;
-        traversal(root, path, result);
-        return result;
+    TreeNode* constructMaximumBinaryTree(vector<int>& nums) {
+        return traversal(nums, 0, nums.size());
     }
 };
