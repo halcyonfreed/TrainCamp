@@ -54,15 +54,17 @@ ACM模式练习https://programmercarl.com/qita/acm.html
 
 
 
-## LC 55. 跳跃游戏
-
-本题如果没接触过，很难想到，所以不要自己憋时间太久，读题思考一会，没思路立刻看题解
+## LC  45.跳跃游戏II 
 
  
 
-[https://programmercarl.com/0055.%E8%B7%B3%E8%B7%83%E6%B8%B8%E6%88%8F.html](https://programmercarl.com/0055.跳跃游戏.html)
+本题同样不容易想出来。贪心就是这样，有的时候 会感觉简单到离谱，有时候，难的不行，主要是不容易想到。
 
+ 
 
+[https://programmercarl.com/0045.%E8%B7%B3%E8%B7%83%E6%B8%B8%E6%88%8FII.html](https://programmercarl.com/0045.跳跃游戏II.html)  
+
+ 
 
 ### 类别
 

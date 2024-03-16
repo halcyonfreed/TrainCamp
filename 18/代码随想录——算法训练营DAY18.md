@@ -1,6 +1,9 @@
 # 代码随想录——算法训练营DAY18
 ## ACM模式输入输出参考
 [acm模式输入输出](https://blog.csdn.net/qq_46046431/article/details/129266738?ops_request_misc=%257B%2522request%255Fid%2522%253A%2522170488815716800197032506%2522%252C%2522scm%2522%253A%252220140713.130102334.pc%255Fall.%2522%257D&request_id=170488815716800197032506&biz_id=0&utm_medium=distribute.pc_search_result.none-task-blog-2~all~first_rank_ecpm_v1~rank_v31_ecpm-2-129266738-null-null.142%5Ev99%5Epc_search_result_base6&utm_term=acm%E6%A8%A1%E5%BC%8F%E8%AF%BB%E5%85%A5vector&spm=1018.2226.3001.4187)
+
+见手写整理！！
+
 ## LC  513.找树左下角的值
 
 本题递归偏难，反而迭代简单属于模板题， 两种方法掌握一下 
@@ -103,11 +106,113 @@ public:
 
 ### 易错点
 
-1. 
+1. 先草稿纸，输入画出树来！！
+2. 要不要return值的问题总结 3大类！！！
+3. 技巧：设计累减与0比，不用累加和target sum比！！烦！！！
 
 其他:
 
 ### code
+
+```cpp
+// 沉下心来，告诉自己的努力不会白费，种因才有果，平心静气
+class Solution{
+private:
+// 未对中间node做操作，所以前中后序都行，还是前序认为
+// 1 return type + param list
+    bool traversal(TreeNode* cur, int count){
+        // 2 end condition(一般是遇到叶子了)
+        if(!cur->left && !cur->right){
+            if(count==0) return true;
+            else return false;
+        }
+
+        // 3 单层logic
+        // 特殊！！！空的node不做递归！
+        if(cur->left){
+            count-=cur->left->val;
+            // 这行难写，如果上一层套娃返回true，那么这一层返回下一层套娃是true
+            // 最终要把这个true 返回到套娃第一层，即root去
+            if(traversal(cur->left,count)) return true;
+            count+=cur->left->val; //如果没有return，那么自然没跳出去，就回溯上一层
+        }
+
+        // 如果上一个if没有return，那么已经回溯到原来的地方，就开始往右孩子找
+        if(cur->right){
+            count-=cur->right->val;
+            if(traversal(cur->right,count)) return true;
+            count+=cur->right->val;
+        }
+
+        return false; //上面都没找到，就false
+    }
+
+public:
+    bool hasPathSum(TreeNode* root, int sum){
+        if(root==nullptr) return false; //特殊情况单独处理
+        return traversal(root,sum-root->val);
+    }
+};
+```
+
+113
+
+```cpp
+
+class Solution {
+    // 设置成全局变量
+    vector<int> path;
+    vector<vector<int>> result;
+private:
+    // 1 返回所有path：要搜索整棵树；且返回值无额外操作，所以直接更新，无return
+    // 1 param list: cur, count技巧不用sum用累减
+    void traversal(TreeNode* cur, int count){
+        // 2 end 遇到叶子
+        if(!cur->left && !cur->right){
+            if(count==0) {
+                result.push_back(path);
+                return; //如果不写return，不会立刻结束，还是要写的！！！return空，函数会立即结束，并且不会返回任何值。
+            }
+            else return;
+        }
+
+        // 3 单层logic
+        if(cur->left){
+            // 空node不递归
+            path.push_back(cur->left->val);
+            count-=cur->left->val;
+
+            traversal(cur->left,count);
+            
+            path.pop_back();// pop没有值的
+            count+=cur->left->val;
+        }
+        if (cur->right) { // 右 （空节点不遍历）
+            path.push_back(cur->right->val);
+            count -= cur->right->val;
+            
+            traversal(cur->right, count);   // 递归
+            
+            count += cur->right->val;       // 回溯
+            path.pop_back();                // 回溯
+        }
+
+        return;
+    }
+
+public:
+    vector<vector<int>> pathSum(TreeNode* root, int sum) {
+        // 这两行不加会怎么样！！ 也可以没什么问题！！
+        result.clear();
+        path.clear();
+        if(root==nullptr) return result;
+        
+        path.push_back(root->val);
+        traversal(root,sum-root->val);
+        return result;
+    }
+};
+```
 
 
 
